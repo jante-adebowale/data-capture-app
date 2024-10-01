@@ -1,6 +1,5 @@
 package com.janteadebowale.datacapture.core.database.model
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.janteadebowale.datacapture.core.domain.model.User
@@ -23,15 +22,13 @@ data class UserEntity(
     val id: String,
     val userId: String,
     val email: String,
-    val firstname: String,
-    val lastname: String,
+    val name: String
 )
 
 fun UserEntity.toUserModel(): User = User(
     userId = this.id,
     email = this.email,
-    firstname = this.firstname,
-    lastname = this.lastname
+    name = this.name
 )
 
 

@@ -15,8 +15,7 @@ data class SignupUiState(
  val isLoading:Boolean = false,
  val canProceed:Boolean = false,
  val isPasswordVisible: Boolean = false,
- val firstname: TextFieldState = TextFieldState(),
- val lastname: TextFieldState = TextFieldState(),
+ val name: TextFieldState = TextFieldState(),
  val email: TextFieldState = TextFieldState(),
  val password: TextFieldState = TextFieldState(),
 )

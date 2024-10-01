@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.janteadebowale.datacapture.R
+import com.janteadebowale.datacapture.core.domain.Constants.POPUP_DELAY
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.DataCaptureTheme
 import kotlinx.coroutines.delay
 
@@ -51,7 +52,6 @@ fun DCMessageDialog(
     message: String,
     type: DialogType,
     navigateOnDismiss:Boolean = false,
-    modifier: Modifier = Modifier,
     onDismissRequest: (Boolean) -> Unit,
 ) {
     Dialog(properties = DialogProperties(
@@ -61,11 +61,11 @@ fun DCMessageDialog(
     }) {
 
         LaunchedEffect(type) {
-            delay(3000L)
+            delay(POPUP_DELAY)
             onDismissRequest(navigateOnDismiss)
         }
         Card(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp)
                 .padding(20.dp),

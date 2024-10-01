@@ -12,23 +12,23 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  * Github    : https://github.com/jante-adebowale
  **********************************************************/
 
-sealed interface Screens {
+sealed interface DestinationScreen {
     @Serializable
-    data object Login : Screens
+    data object Login : DestinationScreen
     @Serializable
-    data object Signup : Screens
+    data object Signup : DestinationScreen
     @Serializable
-    data object Capture : Screens
+    data object Capture : DestinationScreen
     @Serializable
-    data object Settings : Screens
+    data object Settings : DestinationScreen
 
     @Serializable
-    data object Home : Screens
+    data object Home : DestinationScreen
 
     @Serializable
-    data object Approved : Screens
+    data object Approved : DestinationScreen
 
     @Serializable
-    data object Declined : Screens
+    data object Declined : DestinationScreen
 
 }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,14 +45,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.janteadebowale.datacapture.R
-import com.janteadebowale.datacapture.auth.presentation.signup.SignupAction
 import com.janteadebowale.datacapture.core.domain.model.ThemeConfig
 import com.janteadebowale.datacapture.core.domain.model.User
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DCBackground
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DCCenterTopAppBar
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DCLogoutDialog
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.Poppins
-import com.janteadebowale.datacapture.core.presentation.ui.toEventResult
+import com.janteadebowale.datacapture.core.presentation.ui.ToEventResult
 import org.koin.androidx.compose.koinViewModel
 
 /**********************************************************
@@ -89,7 +87,7 @@ fun SettingRoute(
             })
     }
 
-    settingViewModel.settingChannelFlow.toEventResult(lifecycleOwner = LocalLifecycleOwner.current) {
+    settingViewModel.settingChannelFlow.ToEventResult(lifecycleOwner = LocalLifecycleOwner.current) {
         when(it){
             SettingEvent.Logout -> {
                 onLogout()
@@ -195,7 +193,7 @@ private fun ProfileView(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "${user?.firstname ?: ""} ${user?.lastname ?: ""}",
+            text = "${user?.name}",
             fontFamily = Poppins,
             color = MaterialTheme.colorScheme.onBackground,
             fontSize = 16.sp,

@@ -20,7 +20,7 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  **********************************************************/
 
 object ApiEndpoints {
-    const val BASE_URL = "http://192.168.102.108:8080/api/"
+    const val BASE_URL = "http://172.20.10.5:8080/api/"
     const val AUTH_URL = "auth"
     const val SIGNUP_URL = "signup"
 

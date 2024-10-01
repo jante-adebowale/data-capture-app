@@ -12,6 +12,5 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
 data class User(
     val userId: String,
     val email: String,
-    val firstname: String,
-    val lastname: String,
+    val name: String,
 )

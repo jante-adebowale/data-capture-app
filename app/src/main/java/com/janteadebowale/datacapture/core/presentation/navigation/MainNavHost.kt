@@ -28,31 +28,31 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
 @Composable
 fun MainNavHost(
     navController: NavHostController,
-    graph: Graph,
+    destinationGraph: DestinationGraph,
 ) {
-    NavHost(navController = navController, startDestination = graph) {
+    NavHost(navController = navController, startDestination = destinationGraph) {
         authGraph(navController)
         homeGraph(navController)
     }
 }
 
 fun NavGraphBuilder.authGraph(navController: NavHostController) {
-    navigation<Graph.Auth>(startDestination = Screens.Login) {
-        composable<Screens.Login> {
+    navigation<DestinationGraph.Auth>(startDestination = DestinationScreen.Login) {
+        composable<DestinationScreen.Login> {
             LoginRoute(onNavigateToSignup = {
-                navController.navigate(Screens.Signup)
+                navController.navigate(DestinationScreen.Signup)
             }, onNavigateToHome = {
-                navController.navigate(Graph.Home) {
-                    popUpTo(Graph.Auth) {
+                navController.navigate(DestinationGraph.Home) {
+                    popUpTo(DestinationGraph.Auth) {
                         inclusive = true
                     }
                 }
             })
         }
 
-        composable<Screens.Signup> {
+        composable<DestinationScreen.Signup> {
             SignupRoute(onNavigateToLogin = {
-                navController.navigate(Screens.Login)
+                navController.navigate(DestinationScreen.Login)
             })
         }
 
@@ -60,29 +60,29 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
 }
 
 fun NavGraphBuilder.homeGraph(navController: NavHostController) {
-    navigation<Graph.Home>(startDestination = Screens.Capture) {
-        composable<Screens.Capture> {
+    navigation<DestinationGraph.Home>(startDestination = DestinationScreen.Capture) {
+        composable<DestinationScreen.Capture> {
             HomeRoute(onNavigateToSettings = {
-                navController.navigate(Screens.Settings)
+                navController.navigate(DestinationScreen.Settings)
             })
         }
-        composable<Screens.Settings> {
+        composable<DestinationScreen.Settings> {
             SettingRoute(onNavigateToHome = {
                 navController.navigateUp()
             }, onLogout = {
-                navController.navigate(Graph.Auth){
-                    popUpTo(Graph.Home){
+                navController.navigate(DestinationGraph.Auth){
+                    popUpTo(DestinationGraph.Home){
                         inclusive = true
                     }
                 }
             })
         }
-        composable<Screens.Approved> {
+        composable<DestinationScreen.Approved> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text = "Approved")
             }
         }
-        composable<Screens.Declined> {
+        composable<DestinationScreen.Declined> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text = "Declined")
             }

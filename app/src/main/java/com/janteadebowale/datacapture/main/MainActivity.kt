@@ -12,13 +12,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.janteadebowale.datacapture.core.domain.model.ThemeConfig
-import com.janteadebowale.datacapture.core.presentation.navigation.Graph
+import com.janteadebowale.datacapture.core.presentation.navigation.DestinationGraph
 import com.janteadebowale.datacapture.core.presentation.navigation.MainNavHost
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.DataCaptureTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -57,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     if (!viewModel.state.isCheckingAuth) {
                         MainNavHost(
                             navHostController,
-                            graph = if (viewModel.state.isLoggedIn) Graph.Home else Graph.Auth
+                            destinationGraph = if (viewModel.state.isLoggedIn) DestinationGraph.Home else DestinationGraph.Auth
                         )
                     }
                 }

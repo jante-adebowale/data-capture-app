@@ -13,10 +13,10 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  **********************************************************/
 
 @Serializable
-sealed interface Graph{
+sealed interface DestinationGraph{
     @Serializable
-    data object Auth : Graph
+    data object Auth : DestinationGraph
 
     @Serializable
-    data object Home : Graph
+    data object Home : DestinationGraph
 }

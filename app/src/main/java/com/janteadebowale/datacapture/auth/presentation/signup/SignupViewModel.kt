@@ -39,21 +39,18 @@ class SignupViewModel(
     val signUpChannel = _signUpChannel.receiveAsFlow()
 
     init {
-        val firstnameFlow = snapshotFlow {
-            uiState.firstname.text
+        val nameFlow = snapshotFlow {
+            uiState.name.text
         }
-        val lastnameFlow = snapshotFlow {
-            uiState.lastname.text
-        }
+
         val emailFlow = snapshotFlow {
             uiState.email.text
         }
         val passwordFlow = snapshotFlow {
             uiState.password.text
         }
-        combine(firstnameFlow,lastnameFlow,emailFlow,passwordFlow){firstname,lastname,email,password ->
-              uiState = uiState.copy(canProceed = firstname.toString().isNotEmpty()
-                      && lastname.toString().isNotEmpty()
+        combine(nameFlow,emailFlow,passwordFlow){ name, email, password ->
+              uiState = uiState.copy(canProceed = name.toString().isNotEmpty()
                       && userDataValidator.validateEmail(email.toString())
                       && userDataValidator.validatePassword(password.toString()))
         }.launchIn(viewModelScope)
@@ -80,8 +77,7 @@ class SignupViewModel(
             val result = authRepository.signup(
                 SignupRequest(
                     email = uiState.email.text.toString().trim(),
-                    firstname = uiState.firstname.text.toString(),
-                    lastname = uiState.lastname.text.toString(),
+                    name = uiState.name.text.toString(),
                     password = uiState.password.text.toString()
                 )
             )

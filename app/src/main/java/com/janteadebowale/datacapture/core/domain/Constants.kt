@@ -13,5 +13,6 @@ object Constants {
  const val USER_SETTINGS = "userSettings"
  const val USERNAME = "username"
  const val THEME = "theme"
- const val DELAY = 5000L
+ const val DELAY = 3000L
+ const val POPUP_DELAY = 3000L
 }

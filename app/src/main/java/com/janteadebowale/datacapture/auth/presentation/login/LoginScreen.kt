@@ -18,9 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,7 +36,7 @@ import com.janteadebowale.datacapture.core.presentation.designsystem.component.D
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DialogState
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DialogType
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.DataCaptureTheme
-import com.janteadebowale.datacapture.core.presentation.ui.toEventResult
+import com.janteadebowale.datacapture.core.presentation.ui.ToEventResult
 import org.koin.androidx.compose.koinViewModel
 
 /**********************************************************
@@ -86,7 +84,7 @@ fun LoginRoute(
             }
         }
     })
-    loginViewModel.loginChannel.toEventResult(lifecycleOwner = LocalLifecycleOwner.current) { loginEvents ->
+    loginViewModel.loginChannel.ToEventResult (lifecycleOwner = LocalLifecycleOwner.current) { loginEvents ->
         when (loginEvents) {
             is LoginEvent.LoginFailed -> {
                 dialogState = DialogState(
@@ -139,7 +137,7 @@ fun LoginScreen(
 
         DCPasswordField(
             state = uiState.password,
-            hint = stringResource(id = R.string.enter_password),
+            hint = stringResource(id = R.string.enter_hint),
             title = stringResource(id = R.string.password),
             leadingIcon = Icons.Outlined.Lock,
             modifier = Modifier

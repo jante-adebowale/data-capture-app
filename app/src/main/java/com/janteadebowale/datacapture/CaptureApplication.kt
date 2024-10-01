@@ -16,6 +16,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import java.time.Instant
 
 /**********************************************************
 2024 Copyright (C), JTA
@@ -32,6 +33,7 @@ class CaptureApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
 
         startKoin {
             androidLogger()

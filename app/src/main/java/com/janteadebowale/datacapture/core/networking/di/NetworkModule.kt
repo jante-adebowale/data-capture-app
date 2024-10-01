@@ -1,5 +1,6 @@
 package com.janteadebowale.datacapture.core.networking.di
 
+import com.janteadebowale.datacapture.BuildConfig
 import com.janteadebowale.datacapture.core.networking.ApiEndpoints
 import com.janteadebowale.datacapture.core.networking.ConnectivityManagerNetworkMonitor
 import com.janteadebowale.datacapture.core.networking.NetworkMonitor
@@ -25,6 +26,10 @@ fun providesLoggingInterceptor(): HttpLoggingInterceptor {
     return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 }
 
+//val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+//    level = HttpLoggingInterceptor.Level.BODY
+//}
+
 fun provideHttpClient(
     loggingInterceptor: HttpLoggingInterceptor,
     networkRequestInterceptor: NetworkRequestInterceptor,
@@ -35,15 +40,17 @@ fun provideHttpClient(
         .readTimeout(60, TimeUnit.SECONDS)
         .connectTimeout(30, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS)
-        .addInterceptor(loggingInterceptor)
+        .apply {
+            if(BuildConfig.DEBUG){
+                addInterceptor(loggingInterceptor)
+            }
+        }
         .addInterceptor(networkRequestInterceptor)
         .build()
 }
 
-
 fun provideConverterFactory(): GsonConverterFactory =
     GsonConverterFactory.create()
-
 
 fun provideRetrofit(
     okHttpClient: OkHttpClient,

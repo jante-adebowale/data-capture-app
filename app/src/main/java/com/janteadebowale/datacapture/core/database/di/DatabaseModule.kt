@@ -16,12 +16,12 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  **********************************************************/
 
 fun provideDataBase(application: Application): CaptureDatabase = Room.databaseBuilder(
- application, CaptureDatabase::class.java, "dcbase.db"
+ application, CaptureDatabase::class.java, "data-capture.db"
 ).build()
 
-fun provideUserDao(captureDatabase: CaptureDatabase) = captureDatabase.userDao
 
 val databaseModule = module {
      single { provideDataBase(get()) }
-     single { provideUserDao(get()) }
+     single { get<CaptureDatabase>().userDao() }
+     single { get<CaptureDatabase>().captureDao() }
 }

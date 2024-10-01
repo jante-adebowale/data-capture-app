@@ -16,7 +16,6 @@ import com.janteadebowale.datacapture.core.domain.repository.UserDataManager
 import com.janteadebowale.datacapture.core.networking.ApiEndpoints
 import com.janteadebowale.datacapture.core.networking.safeNetworkCall
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import retrofit2.http.Body
@@ -76,8 +75,7 @@ class AuthRepositoryImpl(
                         UserEntity(
                             id = USER_ID,
                             userId = data.id,
-                            firstname = data.firstname,
-                            lastname = data.lastname,
+                            name = data.name,
                             email = data.email
                         )
                     )

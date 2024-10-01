@@ -35,7 +35,7 @@ import com.janteadebowale.datacapture.core.presentation.designsystem.component.D
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DialogState
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DialogType
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.DataCaptureTheme
-import com.janteadebowale.datacapture.core.presentation.ui.toEventResult
+import com.janteadebowale.datacapture.core.presentation.ui.ToEventResult
 import org.koin.androidx.compose.koinViewModel
 
 /**********************************************************
@@ -75,7 +75,7 @@ fun SignupRoute(
         }
     }
 
-    signupViewModel.signUpChannel.toEventResult(lifecycleOwner = LocalLifecycleOwner.current) { signupEvent ->
+    signupViewModel.signUpChannel.ToEventResult(lifecycleOwner = LocalLifecycleOwner.current) { signupEvent ->
         when (signupEvent) {
             is SignupEvent.SignupFailure -> {
                 dialogState = DialogState(
@@ -146,9 +146,9 @@ fun SignupScreen(
             )
         ) {
             DCTextField(
-                state = uiState.firstname,
-                hint = stringResource(id = R.string.enter_firstname),
-                title = stringResource(id = R.string.firstname),
+                state = uiState.name,
+                hint = stringResource(id = R.string.first_last_name),
+                title = stringResource(id = R.string.first_last_name),
                 error = "",
                 leadingIcon = Icons.Outlined.PersonOutline,
                 keyboardOptions = KeyboardOptions(
@@ -163,28 +163,10 @@ fun SignupScreen(
                     .fillMaxWidth()
             )
 
-            DCTextField(
-                state = uiState.lastname,
-                hint = stringResource(id = R.string.enter_lastname),
-                title = stringResource(id = R.string.lastname),
-                error = "",
-                leadingIcon = Icons.Outlined.PersonOutline,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-                    keyboardType = KeyboardType.Unspecified,
-                    capitalization = KeyboardCapitalization.Words
-                ),
-                onKeyBoardAction = {
-                    emailFocusRequester.requestFocus()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(lastnameFocusRequester)
-            )
 
             DCTextField(
                 state = uiState.email,
-                hint = stringResource(id = R.string.enter_email),
+                hint = stringResource(id = R.string.email_hint),
                 title = stringResource(id = R.string.email),
                 error = "",
                 leadingIcon = Icons.Outlined.Email,
@@ -202,7 +184,7 @@ fun SignupScreen(
 
             DCPasswordField(
                 state = uiState.password,
-                hint = stringResource(id = R.string.enter_password),
+                hint = stringResource(id = R.string.enter_hint),
                 title = stringResource(id = R.string.password),
                 leadingIcon = Icons.Outlined.Lock,
                 modifier = Modifier

@@ -2,7 +2,9 @@ package com.janteadebowale.datacapture.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.janteadebowale.datacapture.core.database.dao.CaptureDao
 import com.janteadebowale.datacapture.core.database.dao.UserDao
+import com.janteadebowale.datacapture.core.database.model.CaptureEntity
 import com.janteadebowale.datacapture.core.database.model.UserEntity
 
 /**********************************************************
@@ -15,9 +17,11 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  * Github    : https://github.com/jante-adebowale
  **********************************************************/
 @Database(
-    entities = [UserEntity::class],
+    entities = [UserEntity::class,CaptureEntity::class],
     version = 1
 )
 abstract class CaptureDatabase : RoomDatabase() {
-    abstract val userDao: UserDao
+    abstract fun userDao(): UserDao
+
+    abstract fun captureDao(): CaptureDao
 }

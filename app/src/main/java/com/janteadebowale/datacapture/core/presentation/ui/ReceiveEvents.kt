@@ -20,11 +20,11 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  **********************************************************/
 
 @Composable
-fun <T> Flow<T>.toEventResult(lifecycleOwner: LifecycleOwner, onReceive: (T) -> Unit) {
+fun <T> Flow<T>.ToEventResult(lifecycleOwner: LifecycleOwner, onReceive: (T) -> Unit) {
     LaunchedEffect(this) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             withContext(Dispatchers.Main.immediate) {
-                this@toEventResult.collect(onReceive)
+                this@ToEventResult.collect(onReceive)
             }
         }
     }
