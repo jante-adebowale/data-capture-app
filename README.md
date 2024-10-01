@@ -1,11 +1,10 @@
-
 # Data Capture App
 ## Introduction
 Data Capture App is a modern Android application built entirely with Kotlin and Jetpack Compose. It follows Android design and development best practices and demonstrates the use of modern tools and libraries to create a functional, reactive user experience.
 ### Screenshots (Light theme)
-![Screenshot showing Login, Home screen and Settings screen](screenshots/screenshots_light.png "Screenshot showing Login, Home screen and Settings screen")
+![Screenshot showing Login, Home screen and Settings screen](https://github.com/jante-adebowale/data-capture-app/blob/master/screenshots/screenshots_light.png?raw=true "Screenshot showing Login, Home screen and Settings screen")
 ### Screenshots (Dark theme)
-![Screenshot showing Login, Home screen and Settings screen](screenshots/screenshots_dark.png "Screenshot showing Login, Home screen and Settings screen")
+![Screenshot showing Login, Home screen and Settings screen](https://github.com/jante-adebowale/data-capture-app/blob/master/screenshots/screenshots_dark.png?raw=true "Screenshot showing Login, Home screen and Settings screen")
 ## Features
 - **Jetpack Compose:** An entirely declarative UI toolkit for intuitive user interface design.
 - **Room Database:** Constructs Database by providing an abstraction layer over SQLite to allow fluent database access.
