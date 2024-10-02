@@ -1,7 +1,8 @@
-package com.janteadebowale.datacapture.core.database.model
+package com.janteadebowale.datacapture.core.common
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import android.content.Context
+import android.health.connect.datatypes.units.Length
+import android.widget.Toast
 
 /************************************************************
 2024 Copyright (C), JTA
@@ -12,18 +13,7 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  * Youtube   : https://www.youtube.com/@jante-adebowale
  * Github    : https://github.com/jante-adebowale
  ************************************************************/
-@Entity(tableName = "capture_entity")
-data class CaptureEntity(
- @PrimaryKey(autoGenerate = false)
- val id:String,
- val name:String,
- val age:Int,
- val longitude: String,
- val latitude:String,
- val dateTime:String,
- val uploaded:Boolean,
- val showAsRecent:Boolean,
- val userId:String
-)
 
-
+  fun Context.showToast(message:String, length:Int = Toast.LENGTH_LONG){
+       Toast.makeText(this,message,length).show()
+  }

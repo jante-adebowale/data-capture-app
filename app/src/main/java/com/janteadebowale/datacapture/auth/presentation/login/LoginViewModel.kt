@@ -1,14 +1,12 @@
 package com.janteadebowale.datacapture.auth.presentation.login
 
 import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.convertUUIDToByte
 import com.janteadebowale.datacapture.auth.domain.UserDataValidator
 import com.janteadebowale.datacapture.auth.domain.model.LoginRequest
 import com.janteadebowale.datacapture.auth.domain.repository.AuthRepository
@@ -22,7 +20,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import org.koin.core.context.startKoin
 
 /**********************************************************
 2024 Copyright (C), JTA
@@ -73,11 +70,11 @@ class LoginViewModel(
 
     fun onAction(loginAction: LoginAction) {
         when (loginAction) {
-            LoginAction.Login -> {
+            LoginAction.OnLogin -> {
                 login()
             }
 
-            LoginAction.TogglePasswordVisibility -> {
+            LoginAction.OnTogglePasswordVisibility -> {
                 uiState = uiState.copy(isPasswordVisible = !uiState.isPasswordVisible)
             }
 
@@ -108,9 +105,9 @@ class LoginViewModel(
 }
 
 sealed interface LoginAction {
-    data object Signup : LoginAction
-    data object Login : LoginAction
-    data object TogglePasswordVisibility : LoginAction
+    data object OnSignup : LoginAction
+    data object OnLogin : LoginAction
+    data object OnTogglePasswordVisibility : LoginAction
 }
 
 sealed interface LoginEvent {

@@ -97,13 +97,10 @@ fun DCMessageDialog(
 
 
 enum class DialogType(@DrawableRes val image: Int, val color: Color) {
-//    Success(Icons.Filled.Check, Color.Green),
-//    Error(Icons.Filled.Cancel, Color.Red),
-//    Info(Icons.Filled.Info, Color.Yellow),
 
     Success(R.drawable.success, Color.Green),
     Error(R.drawable.error, Color.Red),
-    Info(R.drawable.error, Color.Yellow),
+    Info(R.drawable.info, Color.Yellow),
 }
 
 data class DialogState(

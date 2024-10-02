@@ -99,7 +99,7 @@ fun SignupRoute(
 
     SignupScreen(uiState = signupViewModel.uiState) { signupAction ->
         when (signupAction) {
-            SignupAction.NavigateToLogin -> {
+            SignupAction.OnNavigateToLogin -> {
                 onNavigateToLogin()
             }
 
@@ -133,7 +133,7 @@ fun SignupScreen(
     Scaffold(
         topBar = {
             DCCenterTopAppBar(topAppBarText = stringResource(id = R.string.signup), onNavUp = {
-                onAction(SignupAction.NavigateToLogin)
+                onAction(SignupAction.OnNavigateToLogin)
             })
         }
     ) { paddingValues ->
@@ -192,7 +192,7 @@ fun SignupScreen(
                     .focusRequester(passwordFocusRequester),
                 isPasswordVisible = uiState.isPasswordVisible,
                 onTogglePasswordVisibility = {
-                    onAction(SignupAction.TogglePasswordVisibility)
+                    onAction(SignupAction.OnTogglePasswordVisibility)
                 },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done,
@@ -212,7 +212,7 @@ fun SignupScreen(
             ) {
                 if(!uiState.isLoading) {
                     focusManager.clearFocus()
-                    onAction(SignupAction.Signup)
+                    onAction(SignupAction.OnSignup)
                 }
             }
         }

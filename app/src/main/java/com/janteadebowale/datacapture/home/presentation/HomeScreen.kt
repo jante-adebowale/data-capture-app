@@ -1,5 +1,6 @@
 package com.janteadebowale.datacapture.home.presentation
 
+import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,20 +37,33 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.janteadebowale.datacapture.R
+import com.janteadebowale.datacapture.core.common.showToast
+import com.janteadebowale.datacapture.core.presentation.designsystem.component.DCMessageDialog
+import com.janteadebowale.datacapture.core.presentation.designsystem.component.DialogState
+import com.janteadebowale.datacapture.core.presentation.designsystem.component.DialogType
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.Approved
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.Captured
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.Poppins
@@ -68,15 +82,76 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  * Github    : https://github.com/jante-adebowale
  **********************************************************/
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeRoute(
     onNavigateToSettings: () -> Unit,
+    onNavigateToApprovedReport: () -> Unit,
+    onNavigateToCapture: () -> Unit,
+    onNavigateToDeclinedReport: () -> Unit,
     homeViewModel: HomeViewModel = koinViewModel<HomeViewModel>(),
 ) {
+
+    val rememberPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberMultiplePermissionsState(
+            listOf(
+                android.Manifest.permission.POST_NOTIFICATIONS,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    } else {
+        rememberMultiplePermissionsState(
+            listOf(
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
+
+
+    var showAlertDialog by remember { mutableStateOf(false) }
+    var dialogState by remember {
+        mutableStateOf(DialogState())
+    }
+    when {
+        showAlertDialog -> {
+            DCMessageDialog(
+                message = dialogState.message,
+                type = dialogState.type,
+                navigateOnDismiss = dialogState.navigateBack
+            ) {
+                showAlertDialog = false
+
+            }
+        }
+    }
+
     HomeScreen(homeViewModel.uiState) {
         when (it) {
-            HomeAction.Setting -> {
+            HomeAction.OnSetting -> {
                 onNavigateToSettings()
+            }
+
+            HomeAction.OnApprovedReport -> {
+                onNavigateToApprovedReport()
+            }
+
+            HomeAction.OnCapture -> {
+                if (rememberPermission.allPermissionsGranted) {
+                    onNavigateToCapture()
+                }else{
+                    dialogState = DialogState(
+                        message = "Grant all necessary permissions",
+                        type = DialogType.Info,
+                        navigateBack = false
+                    )
+                    showAlertDialog = true
+                }
+            }
+
+            HomeAction.OnDeclinedReport -> {
+                onNavigateToDeclinedReport()
             }
 
             else -> {
@@ -105,15 +180,15 @@ fun HomeScreen(
                 onClick = { index ->
                     when (index) {
                         0 -> {
-
+                            onAction(HomeAction.OnApprovedReport)
                         }
 
                         1 -> {
-
+                            onAction(HomeAction.OnCapture)
                         }
 
                         2 -> {
-
+                            onAction(HomeAction.OnDeclinedReport)
                         }
                     }
 
@@ -139,7 +214,7 @@ fun HomeScreen(
                     .padding(end = 16.dp)
                     .nestedScroll(scrollBehavior.nestedScrollConnection),
                 onSettingClicked = {
-                    onAction(HomeAction.Setting)
+                    onAction(HomeAction.OnSetting)
                 }
             )
         }
@@ -199,8 +274,16 @@ fun HomeScreen(
                         state = dismissBoxState,
                         enableDismissFromStartToEnd = false,
                         backgroundContent = {
-                            Box(modifier = Modifier.fillMaxSize().padding(end = 10.dp)) {
-                                Icon(modifier = Modifier.align(alignment = Alignment.CenterEnd), imageVector = Icons.Default.Delete,contentDescription = stringResource(R.string.swipeToDelete))
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(end = 10.dp)
+                            ) {
+                                Icon(
+                                    modifier = Modifier.align(alignment = Alignment.CenterEnd),
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = stringResource(R.string.swipeToDelete)
+                                )
                             }
                         }) {
                         RecentListItem(recentData = it)
@@ -210,7 +293,7 @@ fun HomeScreen(
                             }
 
                             SwipeToDismissBoxValue.EndToStart -> {
-                               recentCaptureList.remove(it)
+                                recentCaptureList.remove(it)
                             }
 
                             SwipeToDismissBoxValue.Settled -> {

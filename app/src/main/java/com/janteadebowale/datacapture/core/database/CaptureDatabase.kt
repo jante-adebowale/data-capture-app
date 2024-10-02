@@ -18,7 +18,8 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  **********************************************************/
 @Database(
     entities = [UserEntity::class,CaptureEntity::class],
-    version = 1
+    version = 1,
+    exportSchema = true
 )
 abstract class CaptureDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

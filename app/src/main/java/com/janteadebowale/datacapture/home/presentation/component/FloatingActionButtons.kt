@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,30 +18,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.RemoveRedEye
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.janteadebowale.datacapture.R
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DCScreenPreview
-import com.janteadebowale.datacapture.core.presentation.designsystem.icon.Dark_Logo
-import com.janteadebowale.datacapture.core.presentation.designsystem.icon.Light_Logo
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.Approved
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.Captured
 import com.janteadebowale.datacapture.core.presentation.designsystem.theme.DataCaptureTheme
@@ -87,7 +78,7 @@ fun FloatingActionButtonWithFabItems(
                     color = Approved
                 ), modifier = Modifier
                     .clickable {
-                        onFabClick(HomeAction.FabToggle(false))
+                        onFabClick(HomeAction.OnFabToggle(false))
                         onClick(0)
                     })
 
@@ -98,7 +89,7 @@ fun FloatingActionButtonWithFabItems(
                     color = Captured
                 ), modifier = Modifier
                     .clickable {
-                        onFabClick(HomeAction.FabToggle(false))
+                        onFabClick(HomeAction.OnFabToggle(false))
                         onClick(1)
                     })
                 Spacer(modifier = Modifier.width(10.dp))
@@ -108,7 +99,7 @@ fun FloatingActionButtonWithFabItems(
                     color = Rejected
                 ), modifier = Modifier
                     .clickable {
-                        onFabClick(HomeAction.FabToggle(false))
+                        onFabClick(HomeAction.OnFabToggle(false))
                         onClick(2)
                     })
 
@@ -123,7 +114,7 @@ fun FloatingActionButtonWithFabItems(
                 .clip(RoundedCornerShape(10.dp))
                 .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 .clickable {
-                    onFabClick(HomeAction.FabToggle(!fabExpanded))
+                    onFabClick(HomeAction.OnFabToggle(!fabExpanded))
                 },
             contentAlignment = Alignment.Center
         ) {

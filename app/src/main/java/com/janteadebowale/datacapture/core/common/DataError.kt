@@ -27,8 +27,8 @@ sealed interface DataError {
     }
 
     enum class Local(val message: String) : DataError {
-        WRITE("Failed to read local data"),
-        READ("Failed to write local data, please check memory space")
+        READ("Failed to read local data"),
+        WRITE("Failed to write local data, please check memory space")
     }
 
     data class DynamicError(val message: String) : DataError

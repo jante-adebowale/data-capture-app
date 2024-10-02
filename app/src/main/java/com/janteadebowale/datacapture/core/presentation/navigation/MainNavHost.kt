@@ -60,18 +60,29 @@ fun NavGraphBuilder.authGraph(navController: NavHostController) {
 }
 
 fun NavGraphBuilder.homeGraph(navController: NavHostController) {
-    navigation<DestinationGraph.Home>(startDestination = DestinationScreen.Capture) {
-        composable<DestinationScreen.Capture> {
-            HomeRoute(onNavigateToSettings = {
-                navController.navigate(DestinationScreen.Settings)
-            })
+    navigation<DestinationGraph.Home>(startDestination = DestinationScreen.Home) {
+        composable<DestinationScreen.Home> {
+            HomeRoute(
+                onNavigateToSettings = {
+                    navController.navigate(DestinationScreen.Settings)
+                },
+                onNavigateToApprovedReport = {
+                    navController.navigate(DestinationScreen.Approved)
+                },
+                onNavigateToCapture = {
+                    navController.navigate(DestinationScreen.Capture)
+                },
+                onNavigateToDeclinedReport = {
+                    navController.navigate(DestinationScreen.Declined)
+                }
+            )
         }
         composable<DestinationScreen.Settings> {
             SettingRoute(onNavigateToHome = {
                 navController.navigateUp()
             }, onLogout = {
-                navController.navigate(DestinationGraph.Auth){
-                    popUpTo(DestinationGraph.Home){
+                navController.navigate(DestinationGraph.Auth) {
+                    popUpTo(DestinationGraph.Home) {
                         inclusive = true
                     }
                 }
@@ -82,6 +93,13 @@ fun NavGraphBuilder.homeGraph(navController: NavHostController) {
                 Text(text = "Approved")
             }
         }
+
+        composable<DestinationScreen.Capture> {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = "Capture")
+            }
+        }
+
         composable<DestinationScreen.Declined> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(text = "Declined")

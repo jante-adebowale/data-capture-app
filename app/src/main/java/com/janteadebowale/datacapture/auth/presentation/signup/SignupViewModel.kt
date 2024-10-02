@@ -58,11 +58,11 @@ class SignupViewModel(
 
     fun onAction(signupAction: SignupAction) {
         when (signupAction) {
-            SignupAction.Signup -> {
+            SignupAction.OnSignup -> {
                 signUp()
             }
 
-            SignupAction.TogglePasswordVisibility -> {
+            SignupAction.OnTogglePasswordVisibility -> {
                 uiState = uiState.copy(isPasswordVisible = !uiState.isPasswordVisible)
             }
 
@@ -94,9 +94,9 @@ class SignupViewModel(
 
 
 sealed interface SignupAction {
-    data object NavigateToLogin : SignupAction
-    data object Signup : SignupAction
-    data object TogglePasswordVisibility : SignupAction
+    data object OnNavigateToLogin : SignupAction
+    data object OnSignup : SignupAction
+    data object OnTogglePasswordVisibility : SignupAction
 }
 
 

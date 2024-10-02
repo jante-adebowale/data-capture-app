@@ -23,11 +23,14 @@ interface CaptureDao {
    @Query("DELETE  FROM capture_entity WHERE id =:id")
    suspend fun deleteCapture(id:String)
 
-   @Query("SELECT * FROM capture_entity WHERE uploaded =:uploaded ORDER BY time ASC")
+   @Query("DELETE  FROM capture_entity WHERE uploaded =:uploaded AND date(dateTime) < date(dateTime,'-2 day')")
+   suspend fun deleteOldCapture(uploaded: Boolean = true)
+
+   @Query("SELECT * FROM capture_entity WHERE uploaded =:uploaded ORDER BY datetime(dateTime) ASC")
    suspend fun getAllPending(uploaded: Boolean = false):List<CaptureEntity>
 
-   @Query("SELECT * FROM capture_entity ORDER BY time DESC LIMIT 4")
-   suspend fun getRecentCapture():List<CaptureEntity>
+   @Query("SELECT * FROM capture_entity ORDER BY datetime(dateTime) DESC LIMIT 4")
+   fun getRecentCapture():Flow<List<CaptureEntity>>
 
    @Query("SELECT COUNT(*) FROM capture_entity WHERE uploaded =:uploaded")
    fun getPendingCount(uploaded: Boolean = false):Flow<Long>

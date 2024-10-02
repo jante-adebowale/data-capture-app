@@ -1,5 +1,6 @@
 package com.janteadebowale.datacapture.auth.presentation.login
 
+import android.os.Build
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +26,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.janteadebowale.datacapture.R
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DCBackground
 import com.janteadebowale.datacapture.core.presentation.designsystem.component.DCButton
@@ -49,12 +53,36 @@ https://www.janteadebowale.com | jante.adebowale@gmail.com
  * Github    : https://github.com/jante-adebowale
  **********************************************************/
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun LoginRoute(
     onNavigateToSignup: () -> Unit,
     onNavigateToHome: () -> Unit,
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
 ) {
+
+    val rememberPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberMultiplePermissionsState(
+            listOf(
+                android.Manifest.permission.POST_NOTIFICATIONS,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    } else {
+        rememberMultiplePermissionsState(
+            listOf(
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
+    }
+
+    LaunchedEffect(true) {
+        if (!rememberPermission.allPermissionsGranted) {
+            rememberPermission.launchMultiplePermissionRequest()
+        }
+    }
 
     var showAlertDialog by remember { mutableStateOf(false) }
     var dialogState by remember {
@@ -75,7 +103,7 @@ fun LoginRoute(
 
     LoginScreen(loginViewModel.uiState, onAction = {
         when (it) {
-            LoginAction.Signup -> {
+            LoginAction.OnSignup -> {
                 onNavigateToSignup()
             }
 
@@ -145,7 +173,7 @@ fun LoginScreen(
                 .focusRequester(passwordFocusRequester),
             isPasswordVisible = uiState.isPasswordVisible,
             onTogglePasswordVisibility = {
-                onAction(LoginAction.TogglePasswordVisibility)
+                onAction(LoginAction.OnTogglePasswordVisibility)
             },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
@@ -165,7 +193,7 @@ fun LoginScreen(
         ) {
             if (!uiState.isLoading) {
                 focusManager.clearFocus()
-                onAction(LoginAction.Login)
+                onAction(LoginAction.OnLogin)
             }
         }
 
@@ -173,7 +201,7 @@ fun LoginScreen(
             text = stringResource(id = R.string.signup),
             modifier = Modifier.align(Alignment.End)
         ) {
-            onAction(LoginAction.Signup)
+            onAction(LoginAction.OnSignup)
         }
 
 
